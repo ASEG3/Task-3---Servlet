@@ -8,7 +8,7 @@ import javax.servlet.http.*;
 
 public class Servlet extends HttpServlet{
 
-	HashMap<String, String> currentFiles = new HashMap<String, String>();
+	
 	private static final long serialVersionUID = 1L;
 	private static final String filePath = "../";
 	
@@ -16,8 +16,7 @@ public class Servlet extends HttpServlet{
 	
 	
 	public void init(){
-		
-		//search for files in the file path directory
+		//Do nothing
 	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -25,7 +24,7 @@ public class Servlet extends HttpServlet{
 		
 		PrintWriter output = response.getWriter();
 		String file = findFile(request.getParameter("MAC"),new File(filePath));
-		String date = new Date().toString();	
+		String date = new Date().toString();
 		if(file != null){
 			String entry = request.getParameter("ENTRY");
 			StringBuilder sb = new StringBuilder();
@@ -40,10 +39,11 @@ public class Servlet extends HttpServlet{
 		} else {
 			
 			FileWriter fw = new FileWriter(new File(request.getParameter("MAC")+".txt"),true);
+			fw.write("MAC, long, lat, date\n");
 			fw.close();
 			
 		}
-		output.println("200 OK");
+		//output.println("200 OK");
 		output.close();
 		output.flush();
 		
