@@ -1,4 +1,6 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.*;
@@ -23,9 +25,22 @@ public class Servlet extends HttpServlet{
 		
 		PrintWriter output = response.getWriter();
 		String file = findFile(request.getParameter("MAC"),new File(filePath));
+		String date = new Date().toString();	
 		if(file != null){
+			String entry = request.getParameter("ENTRY");
+			StringBuilder sb = new StringBuilder();
+			sb.append(entry);
+			sb.append(", ");
+			sb.append(date);
+			sb.append("\n");
+			FileWriter fw = new FileWriter(file, true);
+			fw.write(sb.toString());
+			fw.close();
 			
 		} else {
+			
+			FileWriter fw = new FileWriter(new File(request.getParameter("MAC")+".txt"),true);
+			fw.close();
 			
 		}
 		output.println("200 OK");
